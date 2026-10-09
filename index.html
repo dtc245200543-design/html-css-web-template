@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web Development Template</title>
+
+    <style>
+        /* Thiết lập chung */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.7;
+            color: #222;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 12px 5%;
+            background-color: #101827;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            color: #38bdf8;
+            font-size: 24px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .nav-list {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-list a {
+            color: white;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-list a:hover {
+            color: #38bdf8;
+        }
+
+        .rightNav {
+            display: flex;
+            gap: 8px;
+        }
+
+        #search {
+            width: 150px;
+            padding: 9px 12px;
+            border: 1px solid #64748b;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        #search:focus {
+            border-color: #38bdf8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #0284c7;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0369a1;
+        }
+
+        .btn-sm {
+            padding: 8px 13px;
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 460px;
+            display: flex;
+            align-items: center;
+            color: white;
+            background: linear-gradient(135deg, #0f172a, #075985);
+            padding: 70px 0;
+        }
+
+        .hero-content {
+            max-width: 760px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 6px 14px;
+            margin-bottom: 18px;
+            border: 1px solid #38bdf8;
+            border-radius: 20px;
+            color: #7dd3fc;
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            margin-bottom: 20px;
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            margin-bottom: 28px;
+            color: #dbeafe;
+            font-size: 18px;
+        }
+
+        /* Các section nội dung */
+        .section {
+            padding: 75px 0;
+            scroll-margin-top: 70px;
+        }
+
+        .section:nth-of-type(even) {
+            background-color: #f1f5f9;
+        }
+
+        .section-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .section-content.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .paras {
+            flex: 1;
+        }
+
+        .section h2 {
+            margin-bottom: 18px;
+            color: #0f172a;
+            font-size: 32px;
+        }
+
+        .section p {
+            margin-bottom: 16px;
+            color: #475569;
+            font-size: 16px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: #0284c7;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Hình minh họa */
+        .thumbnail {
+            flex: 0 0 40%;
+            text-align: center;
+        }
+
+        .thumbnail img {
+            display: block;
+            width: 100%;
+            max-width: 420px;
+            height: 260px;
+            margin: auto;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+        }
+
+        /* Thẻ khóa học */
+        .courses {
+            padding: 75px 0;
+            background-color: #fff;
+        }
+
+        .section-heading {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-heading h2 {
+            margin-bottom: 10px;
+            color: #0f172a;
+            font-size: 34px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+        }
+
+        .course-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .course-card {
+            flex: 1 1 280px;
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .course-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background-color: #e0f2fe;
+            color: #0284c7;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .course-card h3 {
+            margin-bottom: 12px;
+            color: #0f172a;
+        }
+
+        .course-card p {
+            margin-bottom: 18px;
+            color: #64748b;
+        }
+
+        .course-card a {
+            color: #0284c7;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px 0;
+            background-color: #101827;
+            color: white;
+            text-align: center;
+        }
+
+        footer p {
+            color: #cbd5e1;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #7dd3fc;
+        }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            .nav-list {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 18px;
+            }
+
+            .rightNav {
+                margin-left: auto;
+            }
+
+            .section-content,
+            .section-content.reverse {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 30px;
+            }
+
+            .thumbnail {
+                flex-basis: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .rightNav {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            #search {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .nav-list {
+                gap: 12px 18px;
+            }
+
+            .nav-list a {
+                font-size: 14px;
+            }
+
+            .hero {
+                min-height: 380px;
+                padding: 55px 0;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section h2,
+            .section-heading h2 {
+                font-size: 27px;
+            }
+
+            .thumbnail img {
+                height: 220px;
+            }
+
+            .course-card {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Thanh điều hướng -->
+    <nav class="navbar">
+        <a href="#home" class="logo">CodeLearn.</a>
+
+        <ul class="nav-list">
+            <li><a href="#home">Trang chủ</a></li>
+            <li><a href="#web">Web Technology</a></li>
+            <li><a href="#program">C Programming</a></li>
+            <li><a href="#java">Java</a></li>
+            <li><a href="#course">Khóa học</a></li>
+        </ul>
+
+        <form class="rightNav" id="searchForm">
+            <input type="search" id="search"
+                   placeholder="Tìm kiếm..."
+                   aria-label="Tìm kiếm nội dung">
+            <button type="submit" class="btn btn-sm">Tìm</button>
+        </form>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-label">HỌC LẬP TRÌNH MỖI NGÀY</span>
+
+                <h1>Khám phá thế giới công nghệ cùng CodeLearn</h1>
+
+                <p>
+                    Bắt đầu hành trình lập trình của bạn với kiến thức
+                    về HTML, CSS, C và Java. Học từ cơ bản và phát triển
+                    kỹ năng thực tế từng ngày.
+                </p>
+
+                <a href="#course" class="btn">Khám phá khóa học</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Web Technology -->
+    <section class="section" id="web">
+        <div class="container">
+            <div class="section-content">
+                <div class="paras">
+                    <span class="section-tag">01 — Web Development</span>
+
+                    <h2>Web Technology</h2>
+
+                    <p>
+                        HTML là viết tắt của HyperText Markup Language,
+                        được sử dụng để xây dựng cấu trúc của trang web.
+                        HTML định nghĩa các thành phần như tiêu đề,
+                        đoạn văn, hình ảnh, liên kết và biểu mẫu.
+                    </p>
+
+                    <p>
+                        Kết hợp HTML với CSS và JavaScript giúp tạo nên
+                        những trang web có giao diện đẹp mắt, linh hoạt
+                        và có khả năng tương tác với người dùng.
+                    </p>
+
+                    <a href="#course" class="btn">Tìm hiểu thêm</a>
+                </div>
+
+                <div class="thumbnail">
+                    <img
+                        src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80"
+                        alt="Lập trình viên làm việc trên máy tính">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- C Programming -->
+    <section class="section" id="program">
+        <div class="container">
+            <div class="section-content reverse">
+                <div class="paras">
+                    <span class="section-tag">02 — Programming</span>
+
+                    <h2>C Programming</h2>
+
+                    <p>
+                        C là ngôn ngữ lập trình hướng thủ tục được phát
+                        triển bởi Dennis Ritchie. Ngôn ngữ này thường
+                        được sử dụng trong lập trình hệ thống, hệ điều
+                        hành và các chương trình yêu cầu hiệu năng cao.
+                    </p>
+
+                    <p>
+                        Học C giúp bạn hiểu rõ hơn về biến, kiểu dữ liệu,
+                        vòng lặp, hàm, con trỏ và cách chương trình
+                        tương tác với bộ nhớ máy tính.
+                    </p>
+
+                    <a href="#course" class="btn">Tìm hiểu thêm</a>
+                </div>
+
+                <div class="thumbnail">
+                    <img
+                        src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80"
+                        alt="Mã nguồn lập trình trên màn hình">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Java -->
+    <section class="section" id="java">
+        <div class="container">
+            <div class="section-content">
+                <div class="paras">
+                    <span class="section-tag">03 — Object Oriented</span>
+
+                    <h2>Java Programming</h2>
+
+                    <p>
+                        Java là ngôn ngữ lập trình phổ biến hỗ trợ
+                        lập trình hướng đối tượng. Mã Java thường được
+                        biên dịch thành bytecode và thực thi thông qua
+                        Java Virtual Machine (JVM).
+                    </p>
+
+                    <p>
+                        Java được sử dụng để phát triển ứng dụng doanh
+                        nghiệp, ứng dụng Android, dịch vụ backend và
+                        nhiều hệ thống phần mềm khác.
+                    </p>
+
+                    <a href="#course" class="btn">Tìm hiểu thêm</a>
+                </div>
+
+                <div class="thumbnail">
+                    <img
+                        src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80"
+                        alt="Máy tính xách tay dùng để học lập trình">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Khóa học -->
+    <section class="courses" id="course">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Khóa học nổi bật</h2>
+                <p>Lựa chọn kiến thức phù hợp để bắt đầu hành trình của bạn.</p>
+            </div>
+
+            <div class="course-list">
+                <article class="course-card">
+                    <div class="course-icon">H</div>
+                    <h3>HTML & CSS</h3>
+                    <p>
+                        Học cách xây dựng cấu trúc trang web và thiết kế
+                        giao diện responsive với HTML và CSS.
+                    </p>
+                    <a href="#web">Khám phá khóa học &rarr;</a>
+                </article>
+
+                <article class="course-card">
+                    <div class="course-icon">C</div>
+                    <h3>C Programming</h3>
+                    <p>
+                        Nắm vững nền tảng lập trình, thuật toán,
+                        hàm, mảng và con trỏ với ngôn ngữ C.
+                    </p>
+                    <a href="#program">Khám phá khóa học &rarr;</a>
+                </article>
+
+                <article class="course-card">
+                    <div class="course-icon">J</div>
+                    <h3>Java Programming</h3>
+                    <p>
+                        Làm quen với lập trình hướng đối tượng và
+                        xây dựng nền tảng cho các ứng dụng Java.
+                    </p>
+                    <a href="#java">Khám phá khóa học &rarr;</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#home">Trang chủ</a>
+                <a href="#web">Web Technology</a>
+                <a href="#program">C Programming</a>
+                <a href="#java">Java</a>
+            </div>
+
+            <p>Copyright &copy; 2026 CodeLearn. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Tìm kiếm nội dung trên trang -->
+    <script>
+        const searchForm = document.getElementById("searchForm");
+        const searchInput = document.getElementById("search");
+
+        searchForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const keyword = searchInput.value.trim().toLowerCase();
+
+            if (!keyword) {
+                searchInput.focus();
+                return;
+            }
+
+            const sections = [
+                { id: "home", text: "trang chủ codelearn lập trình công nghệ" },
+                { id: "web", text: "web technology html css javascript" },
+                { id: "program", text: "c programming ngôn ngữ c lập trình" },
+                { id: "java", text: "java programming jvm hướng đối tượng" },
+                { id: "course", text: "khóa học html css c java" }
+            ];
+
+            const result = sections.find(function (section) {
+                return section.text.includes(keyword);
+            });
+
+            if (result) {
+                document.getElementById(result.id).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                alert("Không tìm thấy nội dung phù hợp. Hãy thử HTML, C hoặc Java.");
+            }
+        });
+    </script>
+
+</body>
+</html>
